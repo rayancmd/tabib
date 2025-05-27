@@ -1,12 +1,13 @@
 <?php
-require '../includes/config.php';
+require_once '../includes/config.php';
+require_once '../includes/functions.php';
 
-error_log("New request: " . print_r($_REQUEST, true));
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? $_GET['action'] ?? '';
+    
     try {
-        if ($_POST['action'] === 'register') {
-            // Required fields
+        if ($action === 'register') {
+            // Validate required fields
             $required = ['name', 'email', 'password', 'confirm_password'];
             foreach ($required as $field) {
                 if (empty($_POST[$field])) {
@@ -14,19 +15,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 }
             }
 
+            $name = sanitizeInput($_POST['name']);
+            $email = sanitizeInput($_POST['email']);
+            $password = $_POST['password'];
+            $confirmPassword = $_POST['confirm_password'];
+            $phone = sanitizeInput($_POST['phone'] ?? '');
+
             // Validate email
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            if (!validateEmail($email)) {
                 throw new Exception("Invalid email format");
             }
 
             // Check password match
-            if ($_POST['password'] !== $_POST['confirm_password']) {
+            if ($password !== $confirmPassword) {
                 throw new Exception("Passwords do not match");
+            }
+
+            // Check password strength
+            if (strlen($password) < 8) {
+                throw new Exception("Password must be at least 8 characters");
             }
 
             // Check if email exists
             $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$_POST['email']]);
+            $stmt->execute([$email]);
             if ($stmt->rowCount() > 0) {
                 throw new Exception("Email already registered");
             }
@@ -34,52 +46,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             // Start transaction
             $pdo->beginTransaction();
 
-            // Insert into users table
+            // Insert user
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'patient')");
-            $stmt->execute([
-                $_POST['name'],
-                $_POST['email'],
-                password_hash($_POST['password'], PASSWORD_BCRYPT)
-            ]);
-            
-            $user_id = $pdo->lastInsertId();
-            error_log("New user created with ID: $user_id");
+            $stmt->execute([$name, $email, password_hash($password, PASSWORD_BCRYPT)]);
+            $userId = $pdo->lastInsertId();
 
-            // Insert into patients table
+            // Insert patient profile
             $stmt = $pdo->prepare("INSERT INTO patients (user_id, phone) VALUES (?, ?)");
-            $stmt->execute([
-                $user_id,
-                $_POST['phone'] ?? null
-            ]);
+            $stmt->execute([$userId, $phone]);
 
-            // Commit transaction
             $pdo->commit();
 
-            // Return success
-            echo json_encode([
+            sendJsonResponse([
                 'success' => true,
-                'user_id' => $user_id,
                 'message' => 'Registration successful'
             ]);
-            exit;
+
+        } elseif ($action === 'login') {
+            $email = sanitizeInput($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? '';
+
+            if (empty($email) || empty($password)) {
+                throw new Exception("Email and password are required");
+            }
+
+            // Find user
+            $stmt = $pdo->prepare("SELECT id, name, email, password, role FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+
+            if (!$user || !password_verify($password, $user['password'])) {
+                throw new Exception("Invalid credentials");
+            }
+
+            // Set session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['role'];
+
+            sendJsonResponse([
+                'success' => true,
+                'message' => 'Login successful',
+                'user' => [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ]
+            ]);
+
+        } elseif ($action === 'logout') {
+            session_destroy();
+            sendJsonResponse(['success' => true, 'message' => 'Logged out successfully']);
+
+        } elseif ($action === 'change_password') {
+            checkAuth();
+            
+            $currentPassword = $_POST['current_password'] ?? '';
+            $newPassword = $_POST['new_password'] ?? '';
+            $confirmPassword = $_POST['confirm_password'] ?? '';
+
+            if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+                throw new Exception("All password fields are required");
+            }
+
+            if ($newPassword !== $confirmPassword) {
+                throw new Exception("New passwords do not match");
+            }
+
+            if (strlen($newPassword) < 8) {
+                throw new Exception("New password must be at least 8 characters");
+            }
+
+            // Verify current password
+            $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
+            $stmt->execute([$_SESSION['user_id']]);
+            $user = $stmt->fetch();
+
+            if (!password_verify($currentPassword, $user['password'])) {
+                throw new Exception("Current password is incorrect");
+            }
+
+            // Update password
+            $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+            $stmt->execute([password_hash($newPassword, PASSWORD_BCRYPT), $_SESSION['user_id']]);
+
+            sendJsonResponse(['success' => true, 'message' => 'Password updated successfully']);
+
+        } else {
+            throw new Exception("Invalid action");
         }
+
     } catch (Exception $e) {
-        // Rollback on error
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
         
-        error_log("Registration error: " . $e->getMessage());
-        
-        echo json_encode([
-            'success' => false,
-            'error' => $e->getMessage(),
-            'debug_info' => [
-                'db_name' => $db,
-                'tables' => $pdo->query("SHOW TABLES")->fetchAll()
-            ]
-        ]);
-        exit;
+        error_log("Auth error: " . $e->getMessage());
+        sendJsonResponse(['success' => false, 'error' => $e->getMessage()], 400);
     }
+} else {
+    sendJsonResponse(['error' => 'Method not allowed'], 405);
 }
 ?>

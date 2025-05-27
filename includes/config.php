@@ -1,13 +1,19 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
+// Set content type for API responses
+if (strpos($_SERVER['REQUEST_URI'], '/api/') !== false) {
+    header("Content-Type: application/json; charset=UTF-8");
+}
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+// Error reporting for development
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Database configuration
 $host = 'localhost';
 $db   = 'tabib'; 
 $user = 'root';
@@ -23,20 +29,21 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
-    
-    $pdo->query("USE $db");
     error_log("Successfully connected to database: $db");
-    
-} catch (\PDOException $e) {
+} catch (PDOException $e) {
     error_log("Database connection failed: " . $e->getMessage());
-    die(json_encode([
-        'success' => false,
-        'error' => 'Database connection failed',
-        'details' => $e->getMessage() 
-    ]));
+    if (strpos($_SERVER['REQUEST_URI'], '/api/') !== false) {
+        die(json_encode([
+            'success' => false,
+            'error' => 'Database connection failed'
+        ]));
+    } else {
+        die('Database connection failed');
+    }
 }
-$pdo->exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
+// Session configuration
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 1); 
+ini_set('session.cookie_secure', 0); // Set to 1 for HTTPS
 session_start();
 ?>
