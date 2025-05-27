@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../includes/config.php';
 
 error_log("New request: " . print_r($_REQUEST, true));
 
