@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabib - Trouver un Médecin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/doctors.css">
+    <link rel="icon" type="image/png" href="/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="/imgs/logo.png" alt="logo" width="90" loading="lazy">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="trouver-medecin.html" class="active">Trouver un médecin</a>
+                <a href="contact.html">Contact</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-login">Connexion</button>
+                    <button class="btn btn-primary">Inscription</button>
+                </div>
+            </div>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Doctor Search Section -->
+    <section class="doctor-search-section">
+        <div class="container">
+            <div class="search-header">
+                <h1>Trouvez le médecin qu'il vous faut</h1>
+                <p>Recherchez par spécialité, localisation ou nom</p>
+            </div>
+
+            <div class="search-tools">
+                <!-- Main Search -->
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mainSearch" placeholder="Cardiologue, Dr. Ahmed, Alger..." autocomplete="off">
+                    <button class="btn btn-primary" id="searchBtn">Rechercher</button>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <label for="specialty"><i class="fas fa-stethoscope"></i> Spécialité</label>
+                        <select id="specialty">
+                            <option value="">Toutes spécialités</option>
+                            <option value="cardiologue">Cardiologue</option>
+                            <option value="generaliste">Médecin généraliste</option>
+                            <option value="pediatre">Pédiatre</option>
+                            <option value="dermatologue">Dermatologue</option>
+                            <option value="gynecologue">Gynécologue</option>
+                            <option value="ophtalmologue">Ophtalmologue</option>
+                            <option value="dentiste">Dentiste</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="wilaya"><i class="fas fa-map-marker-alt"></i> Wilaya</label>
+                        <select id="wilaya">
+                            <option value="">Toute l'Algérie</option>
+                            <option value="16">Alger</option>
+                            <option value="31">Oran</option>
+                            <option value="19">Sétif</option>
+                            <option value="24">Constantine</option>
+                            <option value="5">Batna</option>
+                            <option value="7">Biskra</option>
+                            <option value="35">Boumerdès</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="availability"><i class="fas fa-calendar-check"></i> Disponibilité</label>
+                        <select id="availability">
+                            <option value="">Tous</option>
+                            <option value="today">Aujourd'hui</option>
+                            <option value="week">Cette semaine</option>
+                            <option value="weekend">Weekend</option>
+                            <option value="evening">Soirée</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Area -->
+            <div class="results-container">
+                <div class="results-sidebar">
+                    <!-- Map Container -->
+                    <div id="map"></div>
+                    
+                    <!-- Filters -->
+                    <div class="extra-filters">
+                        <h3>Filtres supplémentaires</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="telemedecine">
+                            <label for="telemedecine">Téléconsultation</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="urgence">
+                            <label for="urgence">Accepte les urgences</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cnam">
+                            <label for="cnam">Accepte CNAM</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="langueFr">
+                            <label for="langueFr">Français</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="langueAr">
+                            <label for="langueAr">Arabe</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="langueEn">
+                            <label for="langueEn">Anglais</label>
+                        </div>
+                        <div class="price-range">
+                            <label for="priceRange">Fourchette de prix (DA)</label>
+                            <div class="range-values">
+                                <span id="minPriceValue">0</span>
+                                <span id="maxPriceValue">10000+</span>
+                            </div>
+                            <input type="range" id="priceRange" min="0" max="10000" step="500" value="10000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-list">
+                    <div class="results-sorting">
+                        <span>Trier par :</span>
+                        <select id="sortBy">
+                            <option value="pertinence">Pertinence</option>
+                            <option value="proximite">Proximité</option>
+                            <option value="note-desc">Note (haut à bas)</option>
+                            <option value="note-asc">Note (bas à haut)</option>
+                            <option value="tarif-desc">Tarif (haut à bas)</option>
+                            <option value="tarif-asc">Tarif (bas à haut)</option>
+                            <option value="disponibilite">Disponibilité</option>
+                        </select>
+                        <span id="resultsCount">0 médecins trouvés</span>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loadingState">
+                        <div class="spinner"></div>
+                        <p>Recherche des médecins...</p>
+                    </div>
+
+                    <!-- No Results State -->
+                    <div class="no-results" id="noResults">
+                        <img src="/imgs/no-results.svg" alt="Aucun résultat" loading="lazy">
+                        <h3>Aucun médecin trouvé</h3>
+                        <p>Essayez de modifier vos critères de recherche</p>
+                        <button class="btn btn-outline" id="resetFilters">Réinitialiser les filtres</button>
+                    </div>
+
+                    <!-- Doctors List -->
+                    <div class="doctors-grid" id="doctorsGrid"></div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination">
+                        <button class="btn btn-outline" id="prevPage" disabled><i class="fas fa-chevron-left"></i> Précédent</button>
+                        <span class="page-indicator">Page <span id="currentPage">1</span> sur <span id="totalPages">1</span></span>
+                        <button class="btn btn-outline" id="nextPage" disabled>Suivant <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Modal -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h2 id="modalDoctorName"></h2>
+            <p class="modal-specialty" id="modalDoctorSpecialty"></p>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="calendar">Prendre RDV</button>
+                <button class="tab-btn" data-tab="info">Informations</button>
+                <button class="tab-btn" data-tab="reviews">Avis</button>
+            </div>
+            
+            <div class="tab-content active" id="calendarTab">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="currentMonthYear">Mai 2025</h3>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+                <div class="time-slots" id="timeSlots">
+                    <h4>Créneaux disponibles</h4>
+                    <div class="slots-container" id="slotsContainer"></div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="infoTab">
+                <div class="doctor-details">
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="modalDoctorAddress"></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <span id="modalDoctorPhone"></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-language"></i>
+                        <span id="modalDoctorLanguages"></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span id="modalDoctorPrice"></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="modalDoctorBio"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="reviewsTab">
+                <div class="reviews-container" id="reviewsContainer">
+                    <div class="review-form">
+                        <h4>Donnez votre avis</h4>
+                        <div class="rating-input">
+                            <span>Note :</span>
+                            <div class="stars">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                        <textarea placeholder="Votre avis..."></textarea>
+                        <button class="btn btn-primary">Envoyer</button>
+                    </div>
+                    <div class="reviews-list" id="reviewsList"></div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-block" id="confirmAppointment">Confirmer le rendez-vous</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>tabib</h3>
+                    <p>La solution de prise de rendez-vous médicaux en ligne pour l'Algérie</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Liens utiles</h3>
+                    <ul>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Alger, Algérie</li>
+                        <li><i class="fas fa-phone"></i> +213 XXX XX XX XX</li>
+                        <li><i class="fas fa-envelope"></i> contact@tabib.dz</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Abonnez-vous pour recevoir nos actualités</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Copyright : Tabib</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/doctors.js"></script>
+</body>
+</html>

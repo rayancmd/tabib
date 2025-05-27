@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabib - Contact</title>
+    <link rel="icon" type="image/png" href="/imgs/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="/imgs/logo.png" alt="logo" width="90">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="trouver-medecin.html">Trouver un médecin</a>
+                <a href="contact.html" class="active">Contact</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-login">Connexion</button>
+                    <button class="btn btn-primary">Inscription</button>
+                </div>
+            </div>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h1>Contactez notre équipe</h1>
+                <p>Une question ? Un problème technique ? Nous sommes là pour vous aider.</p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" required>
+                                <option value="">Sélectionnez un sujet</option>
+                                <option value="technical">Support technique</option>
+                                <option value="account">Problème de compte</option>
+                                <option value="feedback">Retour d'expérience</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Téléphone</h3>
+                        <p>+213 123 456 789</p>
+                        <p>Disponible 24h/24 pour les urgences</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p>contact@tabib.dz</p>
+                        <p>Réponse sous 24 heures</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Bureau principal</h3>
+                        <p>123 Rue Didouche Mourad</p>
+                        <p>Alger, Algérie</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Google Maps Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2>Notre localisation</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13225.832692122687!2d3.87370903995537!3d36.377007429599885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128c2f88be202109%3A0xce78f9b0040abea8!2sUniversity%20Pole!5e0!3m2!1sen!2sdz!4v1746101144110!5m2!1sen!2sdz" width="1200" height="600" style="border:0;"
+             allowfullscreen="" 
+             loading="lazy" 
+             referrerpolicy="no-referrer-when-downgrade">
+            </iframe>    
+        </div>
+        </section>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+          <div class="footer-grid">
+              <div class="footer-col">
+                  <h3>Tabib</h3>
+                  <p>La solution de prise de rendez-vous médicaux en ligne pour l'Algérie</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  </div>
+              </div>
+              <div class="footer-col">
+                  <h3>Liens utiles</h3>
+                  <ul>
+                      <li><a href="#">Mentions légales</a></li>
+                      <li><a href="#">Politique de confidentialité</a></li>
+                      <li><a href="#">Conditions d'utilisation</a></li>
+                      <li><a href="#">FAQ</a></li>
+                  </ul>
+              </div>
+              <div class="footer-col">
+                  <h3>Contact</h3>
+                  <ul>
+                      <li><i class="fas fa-map-marker-alt"></i> Alger, Algérie</li>
+                      <li><i class="fas fa-phone"></i> +213 XXX XX XX XX</li>
+                      <li><i class="fas fa-envelope"></i> contact@tabib.dz</li>
+                  </ul>
+              </div>
+              <div class="footer-col">
+                  <h3>Newsletter</h3>
+                  <p>Abonnez-vous pour recevoir nos actualités</p>
+                  <form class="newsletter-form">
+                      <input type="email" placeholder="Votre email">
+                      <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                  </form>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 Copyright : TabibDZ</p>
+          </div>
+      </div>
+  </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/contact.js"></script>    
+</body>
+</html>

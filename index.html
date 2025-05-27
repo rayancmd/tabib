@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabib - Rendez-vous Médicaux en Algérie</title>
+    <link rel="icon" type="image/png" href="/imgs/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/doctors.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="/imgs/logo.png" alt="logo" width="100">
+            </a>
+            <div class="nav-links">
+                <a href="#accueil">Accueil</a>
+                <a href="trouver-medecin.html">Trouver un médecin</a>
+                <a href="#comment-ca-marche">Comment ça marche</a>
+                <a href="contact.html">Contact</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-login">Connexion</button>
+                    <button class="btn btn-primary">Inscription</button>
+                </div>
+                <div class="language-switcher">
+                    <span class="active">FR</span> | <span>AR</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+<section class="hero" id="accueil">
+  <div class="container">
+      <div class="hero-content">
+          <div class="hero-text">
+              <h1 class="hero-title animate-fade-in">
+                  <span class="highlight">Prenez rendez-vous</span> avec votre médecin en Algérie
+              </h1>
+              <p class="hero-subtitle animate-fade-in animate-delay-1">Service de prise de rendez-vous médicaux 100% en ligne</p>
+              
+              <div class="search-box animate-slide-up animate-delay-2">
+                  <div class="search-input">
+                      <i class="fas fa-search"></i>
+                      <input type="text" placeholder="Spécialité, médecin ou clinique...">
+                  </div>
+                  <div class="search-input">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <select id="wilaya">
+                          <option value="">Toute l'Algérie</option>
+                          <!-- Wilaya options here , Js -->
+                      </select>
+                  </div>
+                  <button class="btn btn-primary btn-search animate-pulse">
+                      <i class="fas fa-search"></i> Trouver
+                  </button>
+              </div>
+              
+              <div class="hero-stats animate-fade-in animate-delay-3">
+                  <div class="stat-item">
+                      <span class="number counter" data-target="850">0</span>+
+                      <span class="label">Médecins qualifiés</span>
+                  </div>
+                  <div class="stat-item">
+                      <span class="number counter" data-target="48">0</span>
+                      <span class="label">Wilayas couvertes</span>
+                  </div>
+                  <div class="stat-item">
+                      <span class="number counter" data-target="15000">0</span>+
+                      <span class="label">Patients satisfaits</span>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="hero-image">
+              <img src="./imgs/doctor-hero.png" alt="Médecin" class="animate-float">
+              <div class="hero-badge animate-bounce">
+                  <span>Disponible 24h/24</span>
+              </div>
+          </div>
+      </div>
+  </div>
+    <div class="wave-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="currentColor"></path>
+          <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="currentColor"></path>
+          <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="currentColor"></path>
+      </svg>
+    </div>
+</section>
+
+    <!-- Comment ça marche -->
+    <section class="how-it-works" id="comment-ca-marche">
+        <div class="container">
+            <h2>Comment prendre rendez-vous?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choisissez un médecin</h3>
+                    <p>Recherchez par spécialité, localisation ou nom</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Sélectionnez un créneau</h3>
+                    <p>Consultez les disponibilités en temps réel</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Confirmez le rendez-vous</h3>
+                    <p>Recevez une confirmation par SMS/email</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Médecins populaires -->
+    <section class="popular-doctors">
+        <div class="container">
+            <h2>Médecins recommandés</h2>
+            <div class="doctors-grid">
+                <!-- Les cartes des médecins seront générées par JavaScript -->
+            </div>
+        </div>
+    </section>
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+  <div class="container">
+      <div class="section-header">
+          <h2 class="section-title">À propos de <span class="highlight">Tabib</span></h2>
+          <p class="section-subtitle">Notre mission est de révolutionner l'accès aux soins médicaux en Algérie</p>
+        </div>
+      
+      <div class="about-content">
+          <div class="about-image animate-fade-in">
+              <img src="./imgs/medical-group.jpg" alt="Équipe médicale">
+          </div>
+          
+          <div class="about-text animate-fade-in animate-delay-1">
+              <p>Tabib est une plateforme innovante de prise de rendez-vous médicaux en ligne, créée en 2023 par une équipe de jeunes entrepreneurs algériens passionnés par la santé et la technologie.</p>
+              
+              <div class="about-features">
+                  <div class="feature-item">
+                      <i class="fas fa-check-circle"></i>
+                      <span>Service 100% algérien</span>
+                  </div>
+                  <div class="feature-item">
+                      <i class="fas fa-check-circle"></i>
+                      <span>Médecins vérifiés</span>
+                    </div>
+                  <div class="feature-item">
+                      <i class="fas fa-check-circle"></i>
+                      <span>Confidentialité garantie</span>
+                  </div>
+                  <div class="feature-item">
+                      <i class="fas fa-check-circle"></i>
+                      <span>Support client 24/7</span>
+                  </div>
+                </div>
+              
+              <button class="btn btn-outline">En savoir plus</button>
+          </div>
+        </div>
+  </div>
+</section>
+
+<!-- App Download Section -->
+<section class="app-download">
+    <div class="container">
+      <div class="app-content">
+        <h2 class="section-title">Téléchargez l'application <span class="highlight">Tabib</span></h2>
+        <p class="app-description">Prenez rendez-vous, consultez vos résultats médicaux et parlez à un médecin depuis votre smartphone</p>
+        
+        <div class="app-features">
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Gestion des rendez-vous</h3>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-file-medical"></i>
+            </div>
+            <h3>Dossiers médicaux</h3>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3>Chat avec médecin</h3>
+          </div>
+        </div>
+        
+        <div class="download-badges">
+          <div class="badge-wrapper">
+            <h5>Disponible prochainement sur</h5>
+            <div class="badges">
+              <a href="#" class="app-badge" onclick="event.preventDefault(); alert('Disponible bientôt sur Google Play!');">
+                <img src="/imgs/play-store-badge.png" alt="Disponible sur Google Play">
+              </a>
+              <a href="#" class="app-badge" onclick="event.preventDefault(); alert('Disponible bientôt sur App Store!');">
+                <img src="/imgs/app-store-badge.png" alt="Télécharger sur l'App Store">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Tabib</h3>
+                    <p>La solution de prise de rendez-vous médicaux en ligne pour l'Algérie</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Liens utiles</h3>
+                    <ul>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Alger, Algérie</li>
+                        <li><i class="fas fa-phone"></i> +213 XXX XX XX XX</li>
+                        <li><i class="fas fa-envelope"></i> contact@tabib.dz</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Abonnez-vous pour recevoir nos actualités</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Copyright : Tabib</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email ou téléphone</label>
+                    <input type="text" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <p class="form-footer">Pas encore inscrit? <a href="#" id="showRegister">Créer un compte</a></p>
+            </form>
+        </div>
+    </div>
+    <!-- Registration Modal -->
+<div class="modal" id="registerModal">
+  <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Inscription</h2>
+      <form id="registerForm">
+          <div class="form-group">
+              <label for="registerName">Nom complet</label>
+              <input type="text" id="registerName" required>
+          </div>
+          <div class="form-group">
+              <label for="registerEmail">Email</label>
+              <input type="email" id="registerEmail" required>
+          </div>
+          <div class="form-group">
+              <label for="registerPhone">Téléphone</label>
+              <input type="tel" id="registerPhone" required>
+          </div>
+          <div class="form-group">
+              <label for="registerPassword">Mot de passe</label>
+              <input type="password" id="registerPassword" required>
+          </div>
+          <div class="form-group">
+              <label for="registerConfirmPassword">Confirmer mot de passe</label>
+              <input type="password" id="registerConfirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">S'inscrire</button>
+          <p class="form-footer">Déjà inscrit? <a href="#" id="showLogin">Se connecter</a></p>
+      </form>
+  </div>
+</div>
+<!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" title="Retour en haut">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script>
+    // Login Example
+   // Update the registration function
+async function register() {
+    const form = document.getElementById('registerForm');
+    const formData = new FormData(form);
+    
+    // Client-side validation
+    if (formData.get('registerPassword') !== formData.get('registerConfirmPassword')) {
+        alert('Les mots de passe ne correspondent pas');
+        return;
+    }
+
+    try {
+        const response = await fetch('api/auth.php?action=register', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Inscription réussie! Vous pouvez maintenant vous connecter.');
+            // Switch to login modal
+            document.getElementById('registerModal').style.display = 'none';
+            document.getElementById('loginModal').style.display = 'flex';
+        } else {
+            alert('Erreur: ' + (result.error || 'Échec de l\'inscription'));
+        }
+    } catch (error) {
+        console.error('Registration error:', error);
+        alert('Une erreur est survenue lors de l\'inscription');
+    }
+}
+
+// Update form submission
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    register();
+});
+
+    
+  </script>
+    <script src="js/app.js"></script>
+</body>
+</html>
