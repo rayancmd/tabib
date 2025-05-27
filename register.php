@@ -19,7 +19,7 @@ if (isLoggedIn()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Tabib</title>
-    <link rel="icon" type="image/png" href="imgs/logo.png">
+    <link rel="icon" type="image/png" href="http://localhost/online_med_app/imgs/logo.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -111,7 +111,7 @@ if (isLoggedIn()) {
     <div class="register-container">
         <div class="register-box">
             <div class="register-header">
-                <img src="imgs/logo.png" alt="Tabib Logo">
+                <img src="http://localhost/online_med_app/imgs/logo.png" alt="Tabib Logo">
                 <h2>Inscription</h2>
                 <p>Créez votre compte patient</p>
             </div>

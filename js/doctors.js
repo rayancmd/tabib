@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
       card.className = 'doctor-card';
       card.innerHTML = `
         <div class="doctor-image">
-          <img src="imgs/doctor.png" alt="${doctor.name}" loading="lazy">
+          <img src="http://localhost/online_med_app/imgs/doctor.png" alt="${doctor.name}" loading="lazy">
           ${doctor.available_today ? '<span class="availability-badge">Disponible aujourd\'hui</span>' : ''}
         </div>
         <div class="doctor-info">

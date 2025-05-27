@@ -211,21 +211,21 @@ document.addEventListener('DOMContentLoaded', function() {
         specialty: "Cardiologue", 
         location: "Alger Centre",
         rating: 4.6,
-        image: "imgs/doctor.png"
+        image: "http://localhost/online_med_app/imgs/doctor.png"
       },
       {
         name: "Dr. Samir Allal",
         specialty: "Pédiatre",
         location: "Oran", 
         rating: 4.1,
-        image: "imgs/doctor.png"
+        image: "http://localhost/online_med_app/imgs/doctor.png"
       },
       {
         name: "Dr. Karim Boudiaf",
         specialty: "Ophtalmologue",
         location: "Constantine",
         rating: 4.7,
-        image: "imgs/doctor.png"
+        image: "http://localhost/online_med_app/imgs/doctor.png"
       }
     ];
     
