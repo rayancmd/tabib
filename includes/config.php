@@ -1,5 +1,4 @@
 <?php
-// Set content type for API responses
 if (strpos($_SERVER['REQUEST_URI'], '/api/') !== false) {
     header("Content-Type: application/json; charset=UTF-8");
 }
@@ -8,12 +7,10 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Error reporting for development
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Database configuration
 $host = 'localhost';
 $db   = 'tabib'; 
 $user = 'root';
@@ -42,8 +39,7 @@ try {
     }
 }
 
-// Session configuration
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 0); // Set to 1 for HTTPS
+ini_set('session.cookie_secure', 0); //
 session_start();
 ?>

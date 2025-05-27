@@ -1,0 +1,101 @@
+/* Modal calendar general style */
+.calendar-container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.calendar-header button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.calendar-header button:hover {
+    background-color: #e6e6e6;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-grid div {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-grid div:hover {
+    background-color: #d0ebff;
+}
+
+.calendar-grid .today {
+    background-color: #bee3f8;
+    border: 2px solid #3182ce;
+    font-weight: bold;
+}
+
+.calendar-grid .selected {
+    background-color: #3182ce;
+    color: white;
+    font-weight: bold;
+}
+
+/* Time slots */
+.time-slots {
+    margin-top: 1rem;
+}
+
+.time-slots h4 {
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.slots-container button {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #3182ce;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.slots-container button:hover {
+    background-color: #ebf8ff;
+}
+
+.slots-container button.selected {
+    background-color: #3182ce;
+    color: white;
+    font-weight: bold;
+}

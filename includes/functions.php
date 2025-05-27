@@ -7,7 +7,6 @@ function validateEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-// Authentication check
 function checkAuth() {
     if (!isset($_SESSION['user_id'])) {
         if (strpos($_SERVER['REQUEST_URI'], '/api/') !== false) {
@@ -21,12 +20,10 @@ function checkAuth() {
     }
 }
 
-// Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Get current user data
 function getCurrentUser($pdo) {
     if (!isLoggedIn()) return null;
     
@@ -35,7 +32,6 @@ function getCurrentUser($pdo) {
     return $stmt->fetch();
 }
 
-// CSRF Protection
 function generateCsrfToken() {
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -47,29 +43,24 @@ function verifyCsrfToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
 
-// Format date for display
 function formatDate($date, $format = 'd/m/Y H:i') {
     return date($format, strtotime($date));
 }
 
-// Send JSON response
 function sendJsonResponse($data, $status = 200) {
     http_response_code($status);
     echo json_encode($data);
     exit;
 }
 
-// Validate appointment date
 function validateAppointmentDate($date) {
     $appointmentDate = new DateTime($date);
     $now = new DateTime();
     
-    // Check if date is in the future
     if ($appointmentDate <= $now) {
         return "Date must be in the future";
     }
     
-    // Check if it's not a weekend (optional)
     $dayOfWeek = $appointmentDate->format('N');
     if ($dayOfWeek >= 6) {
         return "Weekend appointments not available";
@@ -78,7 +69,6 @@ function validateAppointmentDate($date) {
     return true;
 }
 
-// Get Algerian wilayas
 function getWilayas() {
     return [
         "1" => "Adrar", "2" => "Chlef", "3" => "Laghouat", "4" => "Oum El Bouaghi",
